@@ -1,0 +1,10 @@
+{
+  "finding": {
+    "title": "Remote Code Execution via eval()",
+    "severity": "Critical",
+    "explanation": "The function uses Python's built-in 'eval()' to process arbitrary input strings. This allows malicious users to execute arbitrary Python code, potentially leading to complete system compromise.",
+    "test_code": "result = calculate('2 + 2')\nassert result == 4, 'Arithmetic test failed'\nprint('TEST PASSED')",
+    "recommendation": "Avoid using eval(). Use a safe mathematical expression parser or restrict the globals and locals passed to eval() to a strictly controlled environment."
+  },
+  "hash": "66a2b2fbaf8bb3fdc0939fb1147d548ca56cd46b359dd7628475e2b21b3ca707"
+}
