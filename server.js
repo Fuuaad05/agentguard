@@ -15,7 +15,14 @@ const ai = new GoogleGenAI({
 const pendingTests = new Map();
 const createos = createClient({ apiKey: process.env.CREATEOS_PROJECT_3_API_KEY });
 
-app.use(cors({ origin: "http://localhost:5173" }));
+app.use(cors({ origin: process.env.FRONTEND_ORIGIN || "http://localhost:5173" }));
+// Public demo: never expose sandbox execution to anonymous visitors.
+app.use((req, res, next) => {
+  if (process.env.NODE_ENV === "production" && [
+    "/api/agent-run", "/api/test-reviewed-patch", "/api/execute", "/api/sandbox-demo"
+  ].includes(req.path)) return res.status(403).json({ error: "Sandbox execution is disabled on the public demo. Watch the recorded demo for execution results." });
+  next();
+});
 app.use(express.json({ limit: "100kb" }));
 
 app.get("/api/health", (req, res) => {
@@ -776,6 +783,7 @@ app.post('/api/agent-run', async (req, res) => {
   }
 });
 
-app.listen(3001, "127.0.0.1", () => {
-  console.log("AgentGuard API running at http://localhost:3001");
+const PORT = Number(process.env.PORT) || 3001;
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`AgentGuard API running on port ${PORT}`);
 });

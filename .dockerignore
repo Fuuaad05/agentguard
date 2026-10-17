@@ -1,0 +1,8 @@
+node_modules
+frontend
+.git
+.env
+.env.*
+.projects
+*.zip
+*.backup*
