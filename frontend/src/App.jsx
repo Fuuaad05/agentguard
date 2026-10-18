@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { ArrowUpRight, ArrowRight, Check, ChevronDown, ChevronUp, CircleAlert, Clipboard, Code2, FileCode2, Fingerprint, GitCompareArrows, LoaderCircle, ScanLine, ShieldCheck, X, Play, RefreshCw } from 'lucide-react';
 import './App.css';
 
-const API = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+const API = (
+  import.meta.env.VITE_API_URL || 'http://localhost:3001'
+).replace(/\/+$/, '');
 const vulnerable = `import sqlite3
 
 def calculate(expression):
